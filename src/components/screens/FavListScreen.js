@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     searchInput: {
+        height: 50,
         fontSize: 20,
     },
     searchImage:{
