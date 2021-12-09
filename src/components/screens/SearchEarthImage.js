@@ -11,6 +11,7 @@ import {dateFilter} from "../../assets/js/commonFunction";
 import MultiSlider from "@ptomasroos/react-native-multi-slider";
 import {EarthImageSection} from "../items/EarthImageSection";
 import {BG_IMG_EARTH_URI, EARTH_SLIDER_MARKER_IMG_URI} from "../../assets/images";
+import LocationHelper from "../../helpers/location";
 
 export const SearchEarthImage = props => {
     const [searchDate, setSearchDate] = useState(new Date())
@@ -19,12 +20,26 @@ export const SearchEarthImage = props => {
     const [imgUri, setImgUri] = useState(null)
     const [imgErr, setImgErr] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [userLocationInfos, setUserLocationInfos] = useState("")
 
     const {navigation} = props
 
+    //region localisation
+    const getUserLocation = useCallback(async() => {
+        await LocationHelper.getUserLocation(setUserLocationInfos)
+    }, []);
+
+    useEffect(() => {
+        const run = async () => {
+            await getUserLocation();
+        };
+        run();
+    }, []);
+    //endregion
+
     const apiNasaEarth = useCallback(async ()=>{
         setIsLoading(true)
-        const params =   {lat:29.78, lon:-94.33, date:dateFilter(searchDate), dim:zoom[0]/100}
+        const params =   {lat:userLocationInfos.coords.latitude, lon:userLocationInfos.coords.longitude, date:dateFilter(searchDate), dim:(100-zoom[0])/100}
         const url = apiNasa.apiNasaEarthImgUri(params)
         const res = await apiNasa.apiNasaEarth(params)
         if(res.error){
@@ -36,7 +51,7 @@ export const SearchEarthImage = props => {
         }
         setIsLoading(false)
 
-    },[searchDate, zoom])
+    },[searchDate, zoom, userLocationInfos])
 
     useEffect(()=>{
         apiNasaEarth()
@@ -60,8 +75,8 @@ export const SearchEarthImage = props => {
                                  onValuesChangeFinish={setZoom}
                                  values={zoom}
                                  step={1}
-                                 max={100}
-                                 min={1}
+                                 max={99}
+                                 min={0}
                                  enableLabel={true}
                                  customLabel={renderCustomLabel}
                                  customMarker={renderCustomMarker}
