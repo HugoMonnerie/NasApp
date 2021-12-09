@@ -22,9 +22,7 @@ const GeoTest = props => {
     //const [permission, setpermisson] = useState("");
 
     const getUserLocation = useCallback(async() => {
-        console.log("component callback location")
         await LocationHelper.getUserLocation(setUserLocationInfos)
-        console.log("fin component" + userLocationInfos)
     }, []);
 
 
