@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "493238512443",
+    "project_id": "nasapp-a2fa9",
+    "storage_bucket": "nasapp-a2fa9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493238512443:android:937b19ba13750c9c10251e",
+        "android_client_info": {
+          "package_name": "com.nasapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493238512443-0m6shg155hp7p6tr7f69rb1vgcjlsrfc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8roOcqEXeTNzqBN7LHoP6ylgaQKbqfOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493238512443-0m6shg155hp7p6tr7f69rb1vgcjlsrfc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
