@@ -16,13 +16,15 @@ type Rationale = {
 
 let locationInfos = []
 
-async function getLocation() {
+async function getLocation(saveFunc) {
     console.log("get location ")
 
     const run = async (position) => {
             console.log("getCurrentPos" + position);
-            locationInfos = position;
-            console.log("global "+ locationInfos)
+            saveFunc(position);
+            //console.log("global "+ locationInfos)
+            console.log(position)
+            console.log(position.coords.accuracy)
     }
     await Geolocation.getCurrentPosition( run
          ,
@@ -35,16 +37,16 @@ async function getLocation() {
     console.log("fin get location")
 }
 
-async function requestLocationPermission() {
+async function requestLocationPermission(saveFunc) {
     console.log("request location  permision")
     let result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
     console.log(result);
     if (result === 'granted') {
-        getLocation();
+        getLocation(saveFunc);
     }
 }
 
-async function getLocationWithPermission() {
+async function getLocationWithPermission(saveFunc) {
     console.log("get location with permision")
 
     switch (Platform.OS) {
@@ -57,14 +59,14 @@ async function getLocationWithPermission() {
                             break;
                         case RESULTS.DENIED:
                             console.log('IOS The permission has not been requested / is denied but requestable');
-                            await requestLocationPermission();
+                            await requestLocationPermission(saveFunc);
                             break;
                         case RESULTS.LIMITED:
                             console.log('IOS The permission is limited: some actions are possible');
                             break;
                         case RESULTS.GRANTED:
                             console.log('IOS The permission is granted');
-                            await getLocation();
+                            await getLocation(saveFunc);
                             break;
                         case RESULTS.BLOCKED:
                             console.log('IOS The permission is denied and not requestable anymore');
@@ -96,7 +98,7 @@ async function getLocationWithPermission() {
                             break;
                         case RESULTS.GRANTED:
                             console.log('ANDROID The permission is granted');
-                            getLocation();
+                            getLocation(saveFunc);
                             break;
                         case RESULTS.BLOCKED:
                             console.log('ANDROID The permission is denied and not requestable anymore');
@@ -110,9 +112,9 @@ async function getLocationWithPermission() {
 }
 
 const LocationHelper = {
-    getUserLocation: async function getUserLocation() {
+    getUserLocation: async function getUserLocation(saveFunc) {
         console.log("start export")
-        await getLocationWithPermission()
+        await getLocationWithPermission(saveFunc)
         console.log("export")
         console.log(locationInfos)
         return locationInfos;
