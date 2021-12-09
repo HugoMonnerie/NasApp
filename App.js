@@ -7,40 +7,20 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import type {Node} from 'react';
+import {StyleSheet, useColorScheme} from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import {AppTabNavigator} from "./src/components/navigators/AppTabNavigator";
 
-import Register from './src/components/Register/Register';
-import LogIn from './src/components/LogIn/LogIn';
-
-const App = () => {
+const App: () => Node = () => {
+  const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaView>
-      <StatusBar/>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic">
-        <View>
-          <Register />
-          <LogIn />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <NavigationContainer>
+        <AppTabNavigator/>
+      </NavigationContainer>
   );
 };
 
