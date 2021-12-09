@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "398602614867",
+    "project_id": "nasapp-baa2e",
+    "storage_bucket": "nasapp-baa2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398602614867:android:b8c9575cee877cdc066ea6",
+        "android_client_info": {
+          "package_name": "com.nasapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "398602614867-h9me6dgb80dt9p856l5n3agktror9nit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1PkFrfV-EkjXqcTvliFNhibR2_HtZTAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "398602614867-h9me6dgb80dt9p856l5n3agktror9nit.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "398602614867-128mke3mul5hq5dibka3mr0osrjema4a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.NasApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
