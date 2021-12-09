@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Text, TextInput, View, StyleSheet, Button, Pressable, Alert } from 'react-native'
 
 import auth from '@react-native-firebase/auth';
 
 export default function Register() {
 
-    const [email, setEmail] = useState([
-
-    ])
-    const [password, setPassword] = useState([
-
-    ])
-    const [passwordConfirm, setPasswordConfirm] = useState([
-
-    ])
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfirm, setPasswordConfirm] = useState("")
+    const [isValid, setIsValid] = useState(false)
+    const [isValidConfirm, setIsValidConfirm] = useState(false)
 
     const onChangePassword = (val) =>{
         setPassword(val)
@@ -25,6 +21,16 @@ export default function Register() {
     const onChangeEmail = (val) =>{
         setEmail(val)
     }
+
+   
+
+    useEffect(() => {
+        setIsValid(password.length >= 3)
+    }, [password])
+
+    const checkPasswordConfirm = useMemo(() => {
+        setIsValidConfirm(password === passwordConfirm)
+    }, [password, passwordConfirm])
 
     // Créer un user en passant l'email et le mot de passe à la fonction de firebase
     const createUser = () => {
@@ -100,7 +106,7 @@ export default function Register() {
             <TextInput
                 value={passwordConfirm}
                 onChangeText={onChangePasswordConfirm}
-                style={styles.input}
+                style={isValidConfirm ? styles.input : styles.inputError}
                 placeholder='Confirmez votre mot de passe'
                 secureTextEntry={true} 
             />
@@ -128,6 +134,14 @@ const styles = StyleSheet.create({
         height:40,
         marginBottom:30,
         borderColor:'grey',
+        borderRadius:5,
+        borderWidth:1,
+        padding:10,
+    },
+    inputError:{
+        height:40,
+        marginBottom:30,
+        borderColor:'red',
         borderRadius:5,
         borderWidth:1,
         padding:10,
