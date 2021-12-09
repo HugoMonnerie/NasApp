@@ -63,15 +63,14 @@ export default function Register({navigation}) {
                 navigation.navigate('AppTabNavigator')
             })
             .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!');
+                switch(error.code){
+                    case 'auth/email-already-in-use':
+                        Alert.alert('Email already in use !')
+                        break;
+                    case 'auth/invalid-email':
+                        Alert.alert('Invalid email !')
+                        break;
                 }
-
-                if (error.code === 'auth/invalid-email') {
-                console.log('That email address is invalid!');
-                }
-
-                console.error(error);
             });
         }
         

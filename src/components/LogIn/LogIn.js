@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, View, StyleSheet, Button, Pressable } from 'react-native'
+import { Text, TextInput, View, StyleSheet, Button, Pressable, Alert } from 'react-native'
 
 import auth from '@react-native-firebase/auth';
 
@@ -12,12 +12,8 @@ const Stack = createNativeStackNavigator();
 
 export default function LogIn({navigation}) {
 
-    const [email, setEmail] = useState([
-
-    ])
-    const [password, setPassword] = useState([
-
-    ])
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const onChangePassword = (val) =>{
         setPassword(val)
@@ -44,11 +40,17 @@ export default function LogIn({navigation}) {
             navigation.navigate('AppTabNavigator')
         })
         .catch(error => {
-            if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
+            switch(error.code){
+                case 'auth/invalid-email':
+                    Alert.alert('Invalid email !')
+                    break;
+                case 'auth/user-not-found':
+                    Alert.alert('User not found !')
+                    break;
             }
+            
 
-            console.error(error);
+            
         });
     }
 

@@ -6,8 +6,6 @@ import {SearchMarsImageNavigator} from "./SearchMarsImageNavigator" ;
 import {SearchEarthImage} from "../screens/SearchEarthImage";
 import {Home} from "../screens/Home";
 import { Button } from "react-native";
-import LogIn from "../LogIn/LogIn";
-
 
 const Tab = createBottomTabNavigator();
 
