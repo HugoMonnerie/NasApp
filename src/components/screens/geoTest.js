@@ -19,7 +19,8 @@ const GeoTest = props => {
 
     const [permission, setpermisson] = useState("");
 
-    LocationHelper.getLocationWithPermission();
+    LocationHelper.getLocationWithPermission().then(
+    );
 
     return (
         <SafeAreaView style={styles.background}>

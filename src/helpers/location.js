@@ -39,10 +39,9 @@ async function requestLocationPermission() {
 
     let result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
     console.log(result);
-
-    //request(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION).then(result => {
-    //    console.log('Reponse ' + result);
-    //});
+    if(result === "granted"){
+        getLocation();
+    }
 }
 
 const LocationHelper = {
