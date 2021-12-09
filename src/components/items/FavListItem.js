@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect, useMemo, useCallback} from 'react';
 import {
-    FlatList,
+    FlatList, Image,
     SafeAreaView,
     StyleSheet,
     Text,
@@ -34,8 +34,8 @@ const FavListItem = props => {
         <TouchableOpacity
             style={styles.listItem}>
             <Text style={styles.itemText}>{favTitle}</Text>
-            <TouchableOpacity onPress={deleteElement.bind(this, props.index)}>
-                <Text style={styles.button}>Delete</Text>
+            <TouchableOpacity style={styles.deleteButton} onPress={deleteElement.bind(this, props.index)}>
+                <Image style={styles.buttonDeleteImg} source={{ uri: "https://www.pngall.com/wp-content/uploads/5/Delete-Bin-Trash-PNG-Clipart.png"}}/>
             </TouchableOpacity>
         </TouchableOpacity>
     );
@@ -43,20 +43,31 @@ const FavListItem = props => {
 
 const styles = StyleSheet.create({
     listItem: {
-        flex: 10,
+        padding: 10,
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '457383',
+        alignItems: 'center',
+        //backgroundColor: '457383',
+        //borderWidth: 1,
+        //borderColor: '#FF5555',
+        borderBottomColor: '#D5D5D5',
+        borderBottomWidth: 1,
     },
     itemText: {
-        fontSize: 20,
+        fontSize: 25,
         color: '#000000',
     },
-    button: {
-        backgroundColor: '#FF5555',
-        height: 45,
-        fontSize: 20,
-        color: '#F6F6F6',
+    deleteButton: {
+        margin: 5,
+    },
+    buttonDeleteImg: {
+        //borderRadius: 50,
+        //backgroundColor: '#FF5555',
+        height: 30,
+        width: 30,
+        //fontSize: 20,
+        //color: '#F6F6F6',
     },
 });
 

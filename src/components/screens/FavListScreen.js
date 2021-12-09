@@ -8,6 +8,7 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    Image,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import {useDispatch, useSelector} from 'react-redux';
@@ -17,7 +18,6 @@ const FavListScreen = props => {
     const [searchText, setSearchText] = useState('');
     const [favList, setFavList] = useState( [{title: "Img1"}, {title: "Img2"}, {title: "img3"}]);
 
-    console.log('rrrr',favList);
     /*
     [
         {
@@ -29,6 +29,10 @@ const FavListScreen = props => {
     ]
      */
 
+    const favListFiltered = useMemo(() => {
+        return favList.filter(fav => fav.title.includes(searchText));
+    }, [favList, searchText]);
+
     const saveFavList = async value => {
         try {
             const jsonValue = JSON.stringify(value);
@@ -38,7 +42,7 @@ const FavListScreen = props => {
         }
     };
 
-    //saveFavList([{title: "Img1"}, {title: "Img2"}, {title: "img3"}]);
+    //saveFavList([{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"}]);
 
     const getFavList = async () => {
         try {
@@ -62,9 +66,18 @@ const FavListScreen = props => {
 
     return (
         <SafeAreaView style={styles.background}>
+            <View style={styles.searchBar}>
+                <Image style={styles.searchImage} source={{uri: 'https://www.pngall.com/wp-content/uploads/8/Vector-Search.png'}}/>
+                <TextInput
+                    placeholder={'Rechercher'}
+                    value={searchText}
+                    onChangeText={setSearchText}
+                    style={styles.searchInput}
+                />
+            </View>
+            <View style={styles.list}>
             <FlatList
-                style={styles.list}
-                data={favList}
+                data={favListFiltered}
                 renderItem={({item, index}) => {
                     return (
                         <FavListItem
@@ -78,6 +91,7 @@ const FavListScreen = props => {
                     );
                 }}
             />
+            </View>
         </SafeAreaView>
     );
 };
@@ -85,24 +99,31 @@ const FavListScreen = props => {
 const styles = StyleSheet.create({
     background: {
         backgroundColor: '#F6F6F6',
-        //flex: 1,
-        color: '#000000',
+        flex: 1,
     },
     searchBar: {
+        flex:1,
+        backgroundColor: '#E6E6E6',
+        margin: 3,
+        padding: 3,
         width: 380,
+        borderRadius: 50,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    searchInput: {
+        fontSize: 20,
+    },
+    searchImage:{
+        height: 30,
+        width: 30,
+        marginHorizontal: 5,
     },
     list: {
-        //flex: 10,
-    },
-    listItem: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    itemText: {
-        fontSize: 20,
+        flex: 20,
     },
 
 });
+
 
 export default FavListScreen;
