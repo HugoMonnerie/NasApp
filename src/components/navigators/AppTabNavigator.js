@@ -5,10 +5,14 @@ import {FORM_IMG_URI, FLEXBOX_IMG_URI, FORM_ENHANCED_IMG_URI, LIST_IMG_URI, TODO
 import {SearchMarsImageNavigator} from "./SearchMarsImageNavigator" ;
 import {SearchEarthImage} from "../screens/SearchEarthImage";
 import {Home} from "../screens/Home";
+import { Button } from "react-native";
+import LogIn from "../LogIn/LogIn";
+
 
 const Tab = createBottomTabNavigator();
 
 export const AppTabNavigator = ()=>{
+
     return (
         <Tab.Navigator initialRouteName="Home"
                        screenOptions={({ route }) => ({
@@ -35,9 +39,30 @@ export const AppTabNavigator = ()=>{
                            tabBarInactiveTintColor: "gray",
                        })}
         >
-            <Tab.Screen name="SearchImagePages" component={SearchMarsImageNavigator} />
-            <Tab.Screen name="EarthImage" component={SearchEarthImage} />
-            <Tab.Screen name="Home" component={Home} />
-        </Tab.Navigator>
+            <Tab.Screen options={{
+                            headerRight: () => (
+                                <Button
+                                  title="Sign out"
+                                />),
+                        }}
+                        name="SearchImagePages" 
+                        component={SearchMarsImageNavigator} />
+            <Tab.Screen options={{
+                            headerRight: () => (
+                                <Button
+                                  title="Sign out"
+                                />),
+                        }}
+                        name="EarthImage" 
+                        component={SearchEarthImage} />
+            <Tab.Screen options={{
+                            headerRight: () => (
+                                <Button
+                                  title="Sign out"
+                                />),
+                        }}
+                        name="Home" 
+                        component={Home} />      
+        </Tab.Navigator>      
     )
 }

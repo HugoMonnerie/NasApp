@@ -3,7 +3,13 @@ import { Text, TextInput, View, StyleSheet, Button, Pressable, Alert } from 'rea
 
 import auth from '@react-native-firebase/auth';
 
-export default function Register() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RegisterLoginNavigator } from '../navigators/RegisterLoginNavigator';
+
+const Stack = createNativeStackNavigator();
+
+export default function Register({navigation}) {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -54,6 +60,7 @@ export default function Register() {
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
                 console.log('User account created & signed in!');
+                navigation.navigate('AppTabNavigator')
             })
             .catch(error => {
                 if (error.code === 'auth/email-already-in-use') {
@@ -70,22 +77,22 @@ export default function Register() {
         
     }
 
-        // Set an initializing state whilst Firebase connects
-        const [initializing, setInitializing] = useState(true);
-        const [user, setUser] = useState();
-      
-        // Handle user state changes
-        function onAuthStateChanged(user) {
-          setUser(user);
-          if (initializing) setInitializing(false);
-        }
-      
-        useEffect(() => {
-          const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-          return subscriber; // unsubscribe on unmount
-        }, []);
-      
-        if (initializing) return null;
+    // Set an initializing state whilst Firebase connects
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
+    
+    // Handle user state changes
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    }
+    
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
+    
+    if (initializing) return null;
       
     return (
         <View style={styles.container}>
@@ -110,7 +117,10 @@ export default function Register() {
                 placeholder='Confirmez votre mot de passe'
                 secureTextEntry={true} 
             />
-            <Pressable>
+            <Pressable
+                onPress={() =>
+                    navigation.navigate('Login')}
+            >
                 <Text style={styles.pressable}>Déjà inscrit ?</Text>
             </Pressable>
             <Button

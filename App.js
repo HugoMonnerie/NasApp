@@ -7,19 +7,21 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
+
 import {StyleSheet, useColorScheme} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import {AppTabNavigator} from "./src/components/navigators/AppTabNavigator";
+import { RegisterLoginNavigator } from './src/components/navigators/RegisterLoginNavigator';
+import { Screen } from 'react-native-screens';
 
-const App: () => Node = () => {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
       <NavigationContainer>
-        <AppTabNavigator/>
+          <RegisterLoginNavigator />
       </NavigationContainer>
   );
 };

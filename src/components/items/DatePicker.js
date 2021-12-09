@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {dateFilterFrench} from "../../assets/js/commonFunction";
+import { Platform } from 'react-native';
 
 export const DatePicker = ({value, setValue}) => {
     const [show, setShow] = useState(false);
