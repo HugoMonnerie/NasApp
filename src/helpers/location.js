@@ -6,17 +6,12 @@ import {
 import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 import Geolocation from 'react-native-geolocation-service';
 
-type Rationale = {
-    title: 'Titre';
-    message: 'Message';
-    buttonPositive?: 'BtnPos';
-    buttonNegative?: 'BtnNeg';
-    buttonNeutral?: 'BtnNeutral';
-};
-
-let locationInfos = []
-
-async function getLocation(saveFunc) {
+/**
+ * Save the location
+ * @param saveFunc The state function to save the data
+ * @returns {Promise<void>}
+ */
+async function saveLocation(saveFunc) {
 
     const run = async (position) => {
             saveFunc(position);
@@ -31,14 +26,24 @@ async function getLocation(saveFunc) {
     );
 }
 
+/**
+ * Doing the request for the permission
+ * @param saveFunc
+ * @returns {Promise<void>}
+ */
 async function requestLocationPermission(saveFunc) {
     let result = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
     if (result === 'granted') {
-        getLocation(saveFunc);
+        saveLocation(saveFunc);
     }
 }
 
-async function getLocationWithPermission(saveFunc) {
+/**
+ * Getting the current permission
+ * @param saveFunc
+ * @returns {Promise<void>}
+ */
+async function getLocationPermission(saveFunc) {
 
     switch (Platform.OS) {
         case 'ios':
@@ -57,7 +62,7 @@ async function getLocationWithPermission(saveFunc) {
                             break;
                         case RESULTS.GRANTED:
                             console.log('IOS The permission is granted');
-                            await getLocation(saveFunc);
+                            await saveLocation(saveFunc);
                             break;
                         case RESULTS.BLOCKED:
                             console.log('IOS The permission is denied and not requestable anymore');
@@ -87,7 +92,7 @@ async function getLocationWithPermission(saveFunc) {
                         break;
                     case RESULTS.GRANTED:
                         console.log('ANDROID The permission is granted');
-                        await getLocation(saveFunc);
+                        await saveLocation(saveFunc);
                         break;
                     case RESULTS.BLOCKED:
                         console.log('ANDROID The permission is denied and not requestable anymore');
@@ -104,10 +109,13 @@ async function getLocationWithPermission(saveFunc) {
     }
 }
 
+/**
+ * Function to export
+ * @type {{getUserLocation: ((function(*=): Promise<void>)|*)}}
+ */
 const LocationHelper = {
     getUserLocation: async function getUserLocation(saveFunc) {
-        await getLocationWithPermission(saveFunc)
-        return locationInfos;
+        await getLocationPermission(saveFunc)
     }
 };
 
