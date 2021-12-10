@@ -2,7 +2,7 @@
 
 ## Informations générales
 
-Application sous react-native permettant de visualiser des photos de Mars provenant de l'API de la Nasa
+Application mobile sous react-native permettant de visualiser des photos de Mars provenant de l'API de la Nasa
 
 Voir des photos satellites de la terre en fonction de la date et de la géolocalisation
 
