@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useCallback} from 'react';
 import {Text, TextInput, View, StyleSheet, Button, Pressable, Alert} from 'react-native';
 
 import auth from '@react-native-firebase/auth';
@@ -6,16 +6,18 @@ import auth from '@react-native-firebase/auth';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RegisterLoginNavigator} from '../navigators/RegisterLoginNavigator';
+import {addUser} from "../../redux/actions";
+import {useDispatch} from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
 export default function Register({navigation}) {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirm, setPasswordConfirm] = useState('');
     const [isValid, setIsValid] = useState(false);
     const [isValidConfirm, setIsValidConfirm] = useState(false);
+    const dispatch = useDispatch();
 
     const onChangePassword = (val) => {
         setPassword(val);
@@ -27,6 +29,14 @@ export default function Register({navigation}) {
     const onChangeEmail = (val) => {
         setEmail(val);
     };
+
+    const addUserLogin = mail => dispatch(addUser(mail));
+
+    const addToUserLogin = useCallback(() => {
+        console.log('add a new user');
+        addUserLogin(email);
+    }, [email]);
+
 
     const checkPassword = useMemo(() => {
         setIsValid(password.length > 5);
@@ -70,6 +80,7 @@ export default function Register({navigation}) {
             auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
+                    addToUserLogin();
                     console.log('User account created & signed in!');
                     navigation.navigate('AppTabNavigator');
                 })
