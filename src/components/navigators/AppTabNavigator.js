@@ -7,11 +7,26 @@ import {SearchEarthImage} from "../screens/SearchEarthImage";
 import {Home} from "../screens/Home";
 import {FavoritesNavigator} from "./FavoritesNavigator";
 import { Button } from "react-native";
+import auth from "@react-native-firebase/auth";
 
 const Tab = createBottomTabNavigator();
 
-export const AppTabNavigator = ()=>{
+export const AppTabNavigator = ({navigation})=>{
 
+    const LogOut = () => {
+        auth()
+            .signOut()
+            .then(() => navigation.navigate('Register'));
+    }
+    const headerLogout = () =>{
+        return {
+            headerRight: () => (
+                <Button
+                    title="Sign out"
+                    onPress={LogOut}
+                />),
+        }
+    }
     return (
         <Tab.Navigator initialRouteName="Home"
                screenOptions={({ route }) => ({
@@ -38,28 +53,13 @@ export const AppTabNavigator = ()=>{
                    tabBarInactiveTintColor: "gray",
                })}
         >
-            <Tab.Screen options={{
-                            headerRight: () => (
-                                <Button
-                                  title="Sign out"
-                                />),
-                        }}
+            <Tab.Screen options={headerLogout}
                         name="SearchImagePages" 
                         component={SearchMarsImageNavigator} />
-            <Tab.Screen options={{
-                            headerRight: () => (
-                                <Button
-                                  title="Sign out"
-                                />),
-                        }}
+            <Tab.Screen options={headerLogout}
                         name="EarthImage" 
                         component={SearchEarthImage} />
-            <Tab.Screen options={{
-                            headerRight: () => (
-                                <Button
-                                  title="Sign out"
-                                />),
-                        }}
+            <Tab.Screen options={headerLogout}
                         name="Home" 
                         component={Home} />      
             <Tab.Screen name="Favorites" component={FavoritesNavigator} />
