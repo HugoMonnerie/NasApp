@@ -32,6 +32,20 @@ export default function LogIn({navigation}) {
 
     // Fonction de connexion fournie par firebase qui va vérifier si l'user existe 
     const LogIn = () => {
+        if (email === "" || password === ""){
+            Alert.alert(
+                "Attention",
+                "Tous les champs doivent être remplis >:( ",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+        }else{
         auth()
         .signInWithEmailAndPassword(email, password)
         // si l'user existe et que les logins sont justes, le connecte
@@ -48,10 +62,9 @@ export default function LogIn({navigation}) {
                     Alert.alert('User not found !')
                     break;
             }
-            
-
-            
         });
+        }
+        
     }
 
         // Set an initializing state whilst Firebase connects
@@ -79,12 +92,14 @@ export default function LogIn({navigation}) {
                 onChangeText={onChangeEmail}
                 style={styles.input}
                 placeholder='Email'
+                placeholderTextColor='#adb5bd'
             />
             <TextInput
                 value={password}
                 onChangeText={onChangePassword}
                 style={styles.input}
                 placeholder='Mot de passe'
+                placeholderTextColor='#adb5bd'
                 secureTextEntry={true} 
             />
             <Pressable
@@ -103,12 +118,14 @@ export default function LogIn({navigation}) {
 
 const styles = StyleSheet.create({
     container:{
-        margin:30
+        margin:30,
+        marginTop:200,
     },
     title:{
         textAlign:'center',
         marginBottom:40,
         fontSize:26,
+        color:'black',
     },
     input:{
         height:40,
@@ -117,9 +134,11 @@ const styles = StyleSheet.create({
         borderRadius:5,
         borderWidth:1,
         padding:10,
+        color:'black'
     },
     pressable:{
         textAlign:'center',
         marginBottom:30,
+        color:'black'
     }
 })
