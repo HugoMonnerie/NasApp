@@ -18,23 +18,11 @@ import {useDispatch, useSelector} from "react-redux";
 const FavListScreen = props => {
     const [searchText, setSearchText] = useState('');
     const favList = useSelector(state=>state.favList)
-    /*
-    [
-        {
-            title: '',
-            roverName: '',
-            earth_date: '',
-            url: '',
-        }
-    ]
-     */
+
     const dispatch = useDispatch()
 
     const delFav = useCallback((index)=>{
         dispatch({type:"DEL_FAV", value:index})
-    }, [dispatch])
-    const initFav = useCallback((list)=>{
-        dispatch({type:"INIT_FAV_LIST", list:list})
     }, [dispatch])
 
     const favListFiltered = useMemo(() => {
@@ -58,21 +46,21 @@ const FavListScreen = props => {
             return [];
         }
     };
-    /*const deleteElement = useCallback( index => {
+    const deleteElement = useCallback( index => {
         let newList = [...favList];
         newList.splice(index, 1);
         delFav(favList[index].id)
         saveFavList(newList);
-    }, [favList]);*/
+    }, [favList]);
 
     const {navigation} = props;
 
     useEffect(() => {
-            const run = async () => {
+            /*const run = async () => {
                 const loadList = await getFavList();
-                initFav(loadList)
+                setFav(loadList)
             };
-            run();
+            run();*/
         //setFavList(getStateFavList())
         },[]);
 
@@ -93,13 +81,11 @@ const FavListScreen = props => {
                 renderItem={({item, index}) => {
                     return (
                         <FavListItem
-                            setFavList={()=>{}}
                             item={item}
+                            title={favList[index].rover.name + " - cam " + favList[index].camera.name}
                             index={index}
-                            favList={favList}
                             navigation={navigation}
-                            saveFavList={saveFavList}
-                            removeFromStore={delFav}
+                            deleteElement={deleteElement}
                         />
                     );
                 }}
