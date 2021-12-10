@@ -1,8 +1,34 @@
-import {ADD_FAV, DEL_FAV} from "../actions";
+import {ADD_FAV, DEL_FAV, ADD_USER, DEL_USER} from "../actions";
 import {isNullOrUndefined} from "../../assets/js/commonFunction";
 
 const initialState = {
+    users:{},
     favList : []
+}
+
+const addOneUser = (state, action) => {
+    if (isNullOrUndefined(action.payload)){
+        return {...state}
+    }
+    const userIndex = Object.keys(state.users).findIndex(item => item === action.payload)
+    if(userIndex===-1){
+        return { ...state, users:{...state.users, [action.payload]:{}} }
+    }
+    return {...state}
+}
+
+const removeOneUser = (state, action) => {
+    if (isNullOrUndefined(action.payload)){
+        return {...state}
+    }
+    const userIndex = Object.keys(state.users).findIndex(item => item === action.payload)
+    if(userIndex!==-1){
+        return {
+            ...state,
+            users:{}
+        }
+    }
+    return {...state}
 }
 
 const addOneFav = (state, action) => {
@@ -24,7 +50,7 @@ const removeOneFav = (state, action) => {
     return !nextState ? state : nextState
 }
 
-const favReducer = (state=initialState, action) => {
+export const favReducer = (state=initialState, action) => {
     switch (action.type) {
         case ADD_FAV:
             return addOneFav(state, action)
@@ -35,4 +61,14 @@ const favReducer = (state=initialState, action) => {
     }
 }
 
-export default favReducer
+export const userReducer = (state=initialState, action) => {
+    switch (action.type) {
+        case ADD_USER:
+            return addOneUser(state, action)
+        case DEL_USER:
+            return removeOneUser(state, action)
+        default:
+            return state
+    }
+}
+

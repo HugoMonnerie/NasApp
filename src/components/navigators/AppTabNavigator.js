@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {Image} from "react-native";
 import {
@@ -16,15 +16,22 @@ import {FavoritesNavigator} from "./FavoritesNavigator";
 import { Button } from "react-native";
 import auth from "@react-native-firebase/auth";
 import {ReadMe} from "../screens/ReadMe";
+import {removeUser} from "../../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
 
 const Tab = createBottomTabNavigator();
 
 export const AppTabNavigator = ({navigation})=>{
+    const dispatch = useDispatch()
+    const userMail = useSelector(state=>Object.keys(state.userReducer.users)[0])
 
     const LogOut = () => {
         auth()
             .signOut()
-            .then(() => navigation.navigate('Register'));
+            .then(() => {
+                removeToUser()
+                navigation.navigate('Register')
+            });
     }
     const headerLogout = () =>{
         return {
@@ -35,6 +42,14 @@ export const AppTabNavigator = ({navigation})=>{
                 />),
         }
     }
+
+    const removeUserLogout = mail => dispatch(removeUser(mail));
+
+    const removeToUser = useCallback(()=>{
+        removeUserLogout(userMail)
+    },[dispatch])
+
+
     return (
         <Tab.Navigator initialRouteName="Home"
                screenOptions={({ route }) => ({
