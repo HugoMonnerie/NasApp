@@ -11,3 +11,4 @@ export const BG_IMG_MARS_URI = "https://wallpapermemory.com/uploads/453/mars-bac
 export const BG_IMG_EARTH_URI = "https://wallpapercave.com/wp/9GIKZfw.jpg"
 
 export const EARTH_SLIDER_MARKER_IMG_URI = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/1200px-Earth_Western_Hemisphere_transparent_background.png"
+export const TRASH_IMG_URI = "https://www.pngall.com/wp-content/uploads/5/Delete-Bin-Trash-PNG-Clipart.png"

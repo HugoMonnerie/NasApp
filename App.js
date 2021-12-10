@@ -13,14 +13,18 @@ import {StyleSheet, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import {AppTabNavigator} from "./src/components/navigators/AppTabNavigator";
+import { Provider } from "react-redux"
+import { store } from "./src/redux/store";
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-      <NavigationContainer>
-        <AppTabNavigator/>
-      </NavigationContainer>
+      <Provider store={store}>
+          <NavigationContainer>
+            <AppTabNavigator/>
+          </NavigationContainer>
+      </Provider>
   );
 };
 

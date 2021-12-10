@@ -9,33 +9,30 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import {useDispatch} from "react-redux";
+import {TRASH_IMG_URI} from "../../assets/images";
 
-const FavListItem = props => {
-
-    const favTitle = props.item.title
-
-    //const {navigation} = props;
+const FavListItem = ({item, favList, setFavList, saveFavList, index, navigation, removeFromStore }) => {
+    const favTitle = item.rover.name + " - cam " + item.camera.name
 
     const deleteElement = useCallback( index => {
-        let newList = [...props.favList];
+        let newList = [...favList];
         newList.splice(index, 1);
-        props.setFavList(newList);
-        props.saveFavList(newList);
-    }, [props.favList]);
+        setFavList(newList);
+        removeFromStore(item.id)
+        saveFavList(newList);
+    }, [favList]);
 
-    /*const goDetails = useCallback(
-        infos => {
-            navigation.navigate('TodoDetails', {infos: infos});
-        },
-        [navigation],
-    );*/
+    const goDetails = useCallback(() => {
+            navigation.navigate("ImageDetails", {photoData: item, index: index})
+        },[navigation],
+    );
 
     return (
-        <TouchableOpacity
-            style={styles.listItem}>
+        <TouchableOpacity onPress={goDetails} style={styles.listItem}>
             <Text style={styles.itemText}>{favTitle}</Text>
-            <TouchableOpacity style={styles.deleteButton} onPress={deleteElement.bind(this, props.index)}>
-                <Image style={styles.buttonDeleteImg} source={{ uri: "https://www.pngall.com/wp-content/uploads/5/Delete-Bin-Trash-PNG-Clipart.png"}}/>
+            <TouchableOpacity style={styles.deleteButton} onPress={deleteElement.bind(this, index)}>
+                <Image style={styles.buttonDeleteImg} source={{ uri: TRASH_IMG_URI}}/>
             </TouchableOpacity>
         </TouchableOpacity>
     );

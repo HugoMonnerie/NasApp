@@ -1,34 +1,37 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {StyleSheet, View, SafeAreaView, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
 import {dateFilterFrench} from "../../assets/js/commonFunction";
+import {useDispatch, useSelector } from "react-redux";
 
-/**
-    * {
- *      "id":102693,
- *      "sol":1000,
- *      "camera":{
- *          "id":20,
- *          "name":"FHAZ",
- *          "rover_id":5,
- *          "full_name":"Front Hazard Avoidance Camera"
- *      },
- *      "img_src":"http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01000/opgs/edr/fcam/FLB_486265257EDR_F0481570FHAZ00323M_.JPG",
- *      "earth_date":"2015-05-30",
- *      "rover":{
- *          "id":5,
- *          "name":"Curiosity",
- *          "landing_date":"2012-08-06",
- *          "launch_date":"2011-11-26",
- *          "status":"active"
- *          }
- *       }
- */
 export const MarsImageDetails = ({route, navigation}) =>{
     const {index, photoData} = route.params
+    const dispatch = useDispatch()
+
+    const isInFavList = useCallback(()=>{
+        return useSelector(state=>state.favList.some(el=>photoData.id === el.id))
+    },[dispatch])
 
     const goBack = useCallback(()=>{
         navigation.goBack()
     },[navigation])
+
+    //region redux
+    const addFav = useCallback((el)=>{
+        dispatch({type:"ADD_FAV", value:el})
+    }, [dispatch])
+
+    const delFav = useCallback((index)=>{
+        dispatch({type:"DEL_FAV", value:index})
+    }, [dispatch])
+    //endregion
+
+    const addToFavorite = useCallback(()=>{
+        addFav(photoData)
+    },[])
+
+    const removeFromFavorite = useCallback(()=>{
+        delFav(photoData.id)
+    },[])
 
     return (
         <SafeAreaView style={styleMarsImageDetails.main}>
@@ -51,11 +54,13 @@ export const MarsImageDetails = ({route, navigation}) =>{
                 <TouchableOpacity onPress={goBack}>
                     <Text>return</Text>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={isInFavList() ? removeFromFavorite : addToFavorite}>
+                    <Text>{isInFavList() ? "Remove from" : "Add To"} favorites</Text>
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )
 }
-
 
 export const styleMarsImageDetails = StyleSheet.create({
     main:{

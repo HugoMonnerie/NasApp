@@ -13,11 +13,11 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 //import {useDispatch, useSelector} from 'react-redux';
 import FavListItem from '../items/FavListItem';
+import {useDispatch, useSelector} from "react-redux";
 
 const FavListScreen = props => {
     const [searchText, setSearchText] = useState('');
-    const [favList, setFavList] = useState( [{title: "Img1"}, {title: "Img2"}, {title: "img3"}]);
-
+    const favList = useSelector(state=>state.favList)
     /*
     [
         {
@@ -28,9 +28,17 @@ const FavListScreen = props => {
         }
     ]
      */
+    const dispatch = useDispatch()
+
+    const delFav = useCallback((index)=>{
+        dispatch({type:"DEL_FAV", value:index})
+    }, [dispatch])
+    const initFav = useCallback((list)=>{
+        dispatch({type:"INIT_FAV_LIST", list:list})
+    }, [dispatch])
 
     const favListFiltered = useMemo(() => {
-        return favList.filter(fav => fav.title.includes(searchText));
+        return favList.filter(fav => (fav.rover.name + " - cam " + fav.camera.name).includes(searchText));
     }, [favList, searchText]);
 
     const saveFavList = async value => {
@@ -42,8 +50,6 @@ const FavListScreen = props => {
         }
     };
 
-    //saveFavList([{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"},{title: "Img1"}, {title: "Img2"}, {title: "img3"}]);
-
     const getFavList = async () => {
         try {
             const jsonValue = await AsyncStorage.getItem('@favList');
@@ -52,17 +58,23 @@ const FavListScreen = props => {
             return [];
         }
     };
+    /*const deleteElement = useCallback( index => {
+        let newList = [...favList];
+        newList.splice(index, 1);
+        delFav(favList[index].id)
+        saveFavList(newList);
+    }, [favList]);*/
 
     const {navigation} = props;
 
     useEffect(() => {
             const run = async () => {
                 const loadList = await getFavList();
-                setFavList(loadList);
+                initFav(loadList)
             };
             run();
-        },
-        []);
+        //setFavList(getStateFavList())
+        },[]);
 
     return (
         <SafeAreaView style={styles.background}>
@@ -81,12 +93,13 @@ const FavListScreen = props => {
                 renderItem={({item, index}) => {
                     return (
                         <FavListItem
-                            setFavList={setFavList}
+                            setFavList={()=>{}}
                             item={item}
                             index={index}
                             favList={favList}
                             navigation={navigation}
                             saveFavList={saveFavList}
+                            removeFromStore={delFav}
                         />
                     );
                 }}
