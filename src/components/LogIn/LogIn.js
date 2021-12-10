@@ -61,6 +61,9 @@ export default function LogIn({navigation}) {
                 case 'auth/user-not-found':
                     Alert.alert('User not found !')
                     break;
+                case 'auth/wrong-password':
+                    Alert.alert('Wrong password !')
+                    break;
             }
         });
         }

@@ -30,6 +30,7 @@ const styles = {
     },
     paragraph: {
         fontSize: 14,
+        color:'black',
     },
     view: {
         borderWidth: 1,
