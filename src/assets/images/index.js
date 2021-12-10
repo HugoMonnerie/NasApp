@@ -15,3 +15,4 @@ export const TRASH_IMG_URI = "https://www.pngall.com/wp-content/uploads/5/Delete
 //export const HEARTH_IMG_URI = "https://lh3.googleusercontent.com/proxy/zXEfSs2hsvaOWURMA7wykIfRgxPwDUU7lY6TIL5RGunIeS471L2Z3Y2SGYEpSWm7_8Ook4J-l4MYxI-go-N4PsjIi_k0s07i7NOl3ma4NNa8sOUsfXeX3Z-d1ahqK0Gxd3UKNw"
 export const HEARTH_IMG_URI = "https://starpng.com/public/uploads/preview/heart-png-image-1-101576168821kb5lwnvu1t.png"
 export const SEARCH_IMG_URI = 'https://www.pngall.com/wp-content/uploads/8/Vector-Search.png'
+export const HOME_IMG_URI = "https://cdn-icons-png.flaticon.com/512/25/25694.png"
