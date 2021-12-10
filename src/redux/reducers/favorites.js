@@ -1,14 +1,20 @@
+import {ADD_FAV, DEL_FAV} from "../actions";
+import {isNullOrUndefined} from "../../assets/js/commonFunction";
+
 const initialState = {
     favList : []
 }
 
 const addOneFav = (state, action) => {
-    return { ...state, favList:[...state.favList, action.value] }
+    if (isNullOrUndefined(action.payload)){
+        return {...state}
+    }
+    return { ...state, favList:[...state.favList, action.payload] }
 }
 
 const removeOneFav = (state, action) => {
     let nextState
-    const favIndex = state.favList.findIndex(item => item.id === action.value)
+    const favIndex = state.favList.findIndex(item => item.id === action.payload)
     if (favIndex !== -1) {
         nextState = {
             ...state,
@@ -18,15 +24,15 @@ const removeOneFav = (state, action) => {
     return !nextState ? state : nextState
 }
 
-const handleFav = (state=initialState, action) => {
+const favReducer = (state=initialState, action) => {
     switch (action.type) {
-        case "ADD_FAV":
+        case ADD_FAV:
             return addOneFav(state, action)
-        case "DEL_FAV":
+        case DEL_FAV:
             return removeOneFav(state, action)
         default:
             return state
     }
 }
 
-export default handleFav
+export default favReducer

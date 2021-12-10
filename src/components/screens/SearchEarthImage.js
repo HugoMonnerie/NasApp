@@ -22,8 +22,6 @@ export const SearchEarthImage = props => {
     const [isLoading, setIsLoading] = useState(false)
     const [userLocationInfos, setUserLocationInfos] = useState("")
 
-    const {navigation} = props
-
     //region localisation
     const getUserLocation = useCallback(async() => {
         await LocationHelper.getUserLocation(setUserLocationInfos)
@@ -39,15 +37,23 @@ export const SearchEarthImage = props => {
 
     const apiNasaEarth = useCallback(async ()=>{
         setIsLoading(true)
-        const params =   {lat:userLocationInfos.coords.latitude, lon:userLocationInfos.coords.longitude, date:dateFilter(searchDate), dim:(100-zoom[0])/100}
-        const url = apiNasa.apiNasaEarthImgUri(params)
-        const res = await apiNasa.apiNasaEarth(params)
-        if(res.error){
+        if(!userLocationInfos || !userLocationInfos.coords){
             setImgErr(true)
-        }
-        else{
-            setImgErr(false)
-            setImgUri(url)
+        }else {
+            const params = {
+                lat: userLocationInfos.coords.latitude,
+                lon: userLocationInfos.coords.longitude,
+                date: dateFilter(searchDate),
+                dim: (100 - zoom[0]) / 100
+            }
+            const url = apiNasa.apiNasaEarthImgUri(params)
+            const res = await apiNasa.apiNasaEarth(params)
+            if (res.error) {
+                setImgErr(true)
+            } else {
+                setImgErr(false)
+                setImgUri(url)
+            }
         }
         setIsLoading(false)
 

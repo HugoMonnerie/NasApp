@@ -14,16 +14,20 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import {AppTabNavigator} from "./src/components/navigators/AppTabNavigator";
 import { Provider } from "react-redux"
-import { store } from "./src/redux/store";
+import { store , persistor} from "./src/redux/store";
+import { PersistGate } from 'redux-persist/integration/react';
 
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
+  //                 <NavigationContainer>
   return (
       <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer>
             <AppTabNavigator/>
           </NavigationContainer>
+        </PersistGate>
       </Provider>
   );
 };

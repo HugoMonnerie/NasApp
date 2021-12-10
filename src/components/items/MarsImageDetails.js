@@ -1,29 +1,27 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, View, SafeAreaView, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import React, {useCallback} from 'react';
+import {StyleSheet, View, SafeAreaView, Text, Image} from 'react-native';
 import {dateFilterFrench} from "../../assets/js/commonFunction";
 import {useDispatch, useSelector } from "react-redux";
+import {addFavorite, removeFavorite} from "../../redux/actions";
+import {FavoriteButton} from "./FavoriteButton";
+import {GoBackButton} from "./GoBackButton";
 
 export const MarsImageDetails = ({route, navigation}) =>{
     const {index, photoData} = route.params
     const dispatch = useDispatch()
+    const favList =useSelector(state=>state.favReducer.favList)
 
     const isInFavList = useCallback(()=>{
-        return useSelector(state=>state.favList.some(el=>photoData.id === el.id))
-    },[dispatch])
+        return favList.some(el=> el!== null && photoData.id === el.id)
+    },[dispatch, favList])
 
     const goBack = useCallback(()=>{
         navigation.goBack()
     },[navigation])
 
     //region redux
-    const addFav = useCallback((el)=>{
-        dispatch({type:"ADD_FAV", value:el})
-    }, [dispatch])
-
-    const delFav = useCallback((index)=>{
-        dispatch({type:"DEL_FAV", value:index})
-    }, [dispatch])
-    //endregion
+    const addFav = photoData => dispatch(addFavorite(photoData));
+    const delFav = index => dispatch(removeFavorite(index));
 
     const addToFavorite = useCallback(()=>{
         addFav(photoData)
@@ -32,10 +30,11 @@ export const MarsImageDetails = ({route, navigation}) =>{
     const removeFromFavorite = useCallback(()=>{
         delFav(photoData.id)
     },[])
+    //endregion
 
     return (
         <SafeAreaView style={styleMarsImageDetails.main}>
-            <ScrollView style={[styleMarsImageDetails.fullHeight]}>
+            <View>
                 <Image style={styleMarsImageDetails.img} source={{uri: photoData.img_src}}/>
                 <View>
                     <View style={styleMarsImageDetails.block}>
@@ -51,20 +50,21 @@ export const MarsImageDetails = ({route, navigation}) =>{
                         <Text>Landing date : {dateFilterFrench(photoData.rover.landing_date)}</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={goBack}>
-                    <Text>return</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={isInFavList() ? removeFromFavorite : addToFavorite}>
-                    <Text>{isInFavList() ? "Remove from" : "Add To"} favorites</Text>
-                </TouchableOpacity>
-            </ScrollView>
+            </View>
+            <View style={styleMarsImageDetails.buttonContainer}>
+                <GoBackButton goBack={goBack}/>
+                <FavoriteButton addToFavorite={addToFavorite}
+                            isInFavList={isInFavList}
+                            removeFromFavorite={removeFromFavorite}/>
+            </View>
         </SafeAreaView>
     )
 }
 
 export const styleMarsImageDetails = StyleSheet.create({
     main:{
-        height:"100%"
+        height:"100%",
+        justifyContent:"space-between"
     },
     block:{
         marginTop:10
@@ -76,5 +76,9 @@ export const styleMarsImageDetails = StyleSheet.create({
     },
     fullHeight:{
         height:"100%"
+    },
+    buttonContainer:{
+        flexDirection:"row",
+        justifyContent: "space-between"
     }
 })

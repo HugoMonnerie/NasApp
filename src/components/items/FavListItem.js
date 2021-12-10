@@ -1,15 +1,6 @@
 import React from 'react';
-import {useState, useEffect, useMemo, useCallback} from 'react';
-import {
-    FlatList, Image,
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import {useDispatch} from "react-redux";
+import {useCallback} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {TRASH_IMG_URI} from "../../assets/images";
 
 const FavListItem = ({item, title, index, navigation, deleteElement }) => {

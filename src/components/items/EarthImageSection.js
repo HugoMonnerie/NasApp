@@ -1,6 +1,6 @@
 import {Image, StyleSheet, Text, View} from "react-native";
 // yarn add react-native-indicator
-//yarn add @react-native-community/art
+// yarn add @react-native-community/art
 import {CirclesRotationScaleLoader} from "react-native-indicator";
 import React from "react";
 
