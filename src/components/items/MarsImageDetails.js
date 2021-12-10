@@ -35,7 +35,7 @@ export const MarsImageDetails = ({route, navigation}) =>{
     return (
         <SafeAreaView style={styleMarsImageDetails.main}>
             <View>
-                <Image style={styleMarsImageDetails.img} source={{uri: photoData.img_src}}/>
+                <Image style={styleMarsImageDetails.img} source={{uri: photoData.img_src.replace('http://', 'https://')}}/>
                 <View>
                     <View style={styleMarsImageDetails.block}>
                         <Text>Photo date : {dateFilterFrench(photoData.earth_date)}</Text>
