@@ -19,7 +19,8 @@ export const styleFavoriteButton = StyleSheet.create({
     img:{
         width:"100%",
         minHeight:200,
-        flex:1
+        flex:1,
+        tintColor:"grey"
     },
     favoriteImg:{
         width:40,
