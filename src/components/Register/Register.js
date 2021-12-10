@@ -28,10 +28,8 @@ export default function Register({navigation}) {
         setEmail(val)
     }
 
-   
-
-    useEffect(() => {
-        setIsValid(password.length >= 3)
+    const checkPassword = useMemo(() => {
+        setIsValid(password.length > 5)
     }, [password])
 
     const checkPasswordConfirm = useMemo(() => {
@@ -55,6 +53,19 @@ export default function Register({navigation}) {
                 ]
               );
               // si les mdp correspondent et que l'email n'est pas déjà utilisé, crée l'user
+        }else if (email === "" || password === "" || passwordConfirm === ""){
+            Alert.alert(
+                "Attention",
+                "Tous les champs doivent être remplis >:( ",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
         }else if (password === passwordConfirm){
             auth()
             .createUserWithEmailAndPassword(email, password)
@@ -73,7 +84,7 @@ export default function Register({navigation}) {
                 }
             });
         }
-        
+            
     }
 
     // Set an initializing state whilst Firebase connects
@@ -101,12 +112,14 @@ export default function Register({navigation}) {
                 onChangeText={onChangeEmail}
                 style={styles.input}
                 placeholder='Email'
+                placeholderTextColor='#adb5bd'
             />
             <TextInput
                 value={password}
                 onChangeText={onChangePassword}
-                style={styles.input}
+                style={isValid ? styles.input : styles.inputError}
                 placeholder='Mot de passe'
+                placeholderTextColor='#adb5bd'
                 secureTextEntry={true} 
             />
             <TextInput
@@ -114,6 +127,7 @@ export default function Register({navigation}) {
                 onChangeText={onChangePasswordConfirm}
                 style={isValidConfirm ? styles.input : styles.inputError}
                 placeholder='Confirmez votre mot de passe'
+                placeholderTextColor='#adb5bd'
                 secureTextEntry={true} 
             />
             <Pressable
@@ -132,12 +146,14 @@ export default function Register({navigation}) {
 
 const styles = StyleSheet.create({
     container:{
-        margin:30
+        margin:30,
+        marginTop:200,
     },
     title:{
         textAlign:'center',
         marginBottom:40,
         fontSize:26,
+        color:'black',
     },
     input:{
         height:40,
@@ -146,6 +162,7 @@ const styles = StyleSheet.create({
         borderRadius:5,
         borderWidth:1,
         padding:10,
+        color:'black'
     },
     inputError:{
         height:40,
@@ -158,5 +175,6 @@ const styles = StyleSheet.create({
     pressable:{
         textAlign:'center',
         marginBottom:30,
+        color:'black',
     }
 })

@@ -43,7 +43,7 @@ et de la géolocalisation
 ### Auteurs
 
 - Gwenaël MARCHETTI-WATERNAUX
-- Alyssia PRÉVOTÉ--HAUGUEL
+- Alyssia PRÉVOTÉ-HAUGUEL
 - Hugo MONNERIE
 - Antoine HALLER
 
