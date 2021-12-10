@@ -16,7 +16,7 @@ Montrer la photo du jour de l'API de la Nasa
 ## Auteurs
 
 - Gwenaël MARCHETTI-WATERNAUX
-- Alyssia PRÉVOTÉ--HAUGUEL
+- Alyssia PRÉVOTÉ-HAUGUEL
 - Hugo MONNERIE
 - Antoine HALLER
 
