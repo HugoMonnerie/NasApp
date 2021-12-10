@@ -14,6 +14,8 @@ const FavListScreen = props => {
     const [searchText, setSearchText] = useState('');
     const {navigation} = props;
     const favList = useSelector(state=>state.favReducer.favList)
+    const state = useSelector(state=>state)
+    console.log(state)
     const dispatch = useDispatch()
 
     const delFav = index => dispatch(removeFavorite(index));

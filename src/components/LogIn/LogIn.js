@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { Text, TextInput, View, StyleSheet, Button, Pressable, Alert } from 'react-native'
 
 import auth from '@react-native-firebase/auth';
@@ -7,13 +7,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RegisterLoginNavigator } from '../navigators/RegisterLoginNavigator';
 import { AppTabNavigator } from '../navigators/AppTabNavigator';
+import {useDispatch, useSelector} from "react-redux";
+import {addUser } from "../../redux/actions";
 
 const Stack = createNativeStackNavigator();
 
 export default function LogIn({navigation}) {
-
-    const [email, setEmail] = useState("")
+    const userMail = useSelector(state=>Object.keys(state.userReducer.users)[0])
+    const [email, setEmail] = useState(userMail || "")
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
 
     const onChangePassword = (val) =>{
         setPassword(val)
@@ -22,6 +25,14 @@ export default function LogIn({navigation}) {
     const onChangeEmail = (val) =>{
         setEmail(val)
     }
+
+    const addUserLogin = mail => dispatch(addUser(mail));
+
+    const addToUserLogin = useCallback(()=>{
+        console.log("add a new user")
+        addUserLogin(email)
+    },[email])
+
 
     // Déconnexion
     const LogOut = () => {
@@ -50,6 +61,7 @@ export default function LogIn({navigation}) {
         .signInWithEmailAndPassword(email, password)
         // si l'user existe et que les logins sont justes, le connecte
         .then(() => {
+            addToUserLogin()
             console.log('User signed in !');
             navigation.navigate('AppTabNavigator')
         })
