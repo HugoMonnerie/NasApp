@@ -37,6 +37,7 @@ export const SearchMarsImage = props => {
     const apiNasaMars = useCallback(async ()=>{
         const params = {rover:searchRovers, sol:1000, camera:searchCamera, earth_date:dateFilter(searchDate)}
         const res = await apiNasa.apiNasaMarsByRovers(params)
+        //console.log(res.photos[0].img_src);
         setPhotosList(res && res.photos ? res.photos : [])
     },[searchRovers, searchCamera, searchDate])
 
@@ -52,7 +53,7 @@ export const SearchMarsImage = props => {
                     <PickerCustom dataList={ROVERS} value={searchRovers} onSelect={setSearchRovers}/>
                     <DatePicker value={searchDate} setValue={setSearchDate}/>
                 </View>
-                <FlatList
+                <FlatList style={stylesSearchImage.flatlist}
                     data={photosList}
                     renderItem={renderItem}
                 />
@@ -78,6 +79,10 @@ export const stylesSearchImage = StyleSheet.create({
         justifyContent: "center"
     },
     container: {
-        flex: 1,
+        //flex: 1,
     },
+    flatlist: {
+        width:'100%',
+        //paddingTop: 100,
+    }
 })
