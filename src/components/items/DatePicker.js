@@ -54,7 +54,7 @@ export const stylesDatePicker = StyleSheet.create({
         backgroundColor: '#D7DEDEDE',
         width: '100%',
         position: 'absolute',
-        //height: '50%',
+        height: '100%',
     },
     button: {
         backgroundColor: '#D7DEDEDE',
