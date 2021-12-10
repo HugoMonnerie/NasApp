@@ -2,6 +2,7 @@ import React from "react";
 import {SearchMarsImage} from "../screens/SearchMarsImage";
 import {MarsImageDetails} from "../items/MarsImageDetails";
 import {createStackNavigator} from "@react-navigation/stack";
+import { Home } from "../screens/Home";
 
 const Stack = createStackNavigator();
 
