@@ -26,9 +26,19 @@ et de la géolocalisation
 
 ### Technologies
 
+- React
 - react-native
 - Firebase
 - react-native-firebase
+- react-native-permissions
+- react-native-geolocation-service
+- axios
+- react-native-navigation
+- Redux
+- redux-persist
+- AsyncStorage
+- react-native-datepicker
+- esLint
 
 ### Auteurs
 
