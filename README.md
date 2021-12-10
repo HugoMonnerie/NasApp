@@ -1,14 +1,14 @@
 # NasApp
 
 ## Sommaire
-1. [Informations générales](#informations-generales)
-    - [Présentation](#presentation)
+1. [Informations générales](#informations-générales)
+    - [Présentation](#présentation)
     - [Technologies](#technologies)
     - [Auteurs](#auteurs)
-2. [Démarrage](#demarrage)
+2. [Démarrage](#démarrage)
 3. [Api](#api)
-3. [Fonctionnalités](#fonctionnalites)
-    - [Présentation](#presentation)
+3. [Fonctionnalités](#fonctionnalités)
+    - [Présentation](#présentation)
     - [Image de mars](#image-de-mars)
     - [Image de la terre](#image-de-la-terre)
     
