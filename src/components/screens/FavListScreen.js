@@ -2,30 +2,30 @@ import React from 'react';
 import {useState, useMemo, useCallback} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import FavListItem from '../items/FavListItem';
-import {useDispatch, useSelector} from "react-redux";
-import {removeFavorite} from "../../redux/actions";
-import {SearchBar} from "../items/SearchBar";
+import {useDispatch, useSelector} from 'react-redux';
+import {removeFavorite} from '../../redux/actions';
+import {SearchBar} from '../items/SearchBar';
 
-const getItemTitle = (roverName, cameraName) =>{
-    return roverName + " - cam " + cameraName
-}
+const getItemTitle = (roverName, cameraName) => {
+    return roverName + ' - cam ' + cameraName;
+};
 
 const FavListScreen = props => {
     const [searchText, setSearchText] = useState('');
     const {navigation} = props;
-    const favList = useSelector(state=>state.favReducer.favList)
-    const state = useSelector(state=>state)
-    console.log(state)
-    const dispatch = useDispatch()
+    const favList = useSelector(state => state.favReducer.favList);
+    const state = useSelector(state => state);
+    console.log(state);
+    const dispatch = useDispatch();
 
     const delFav = index => dispatch(removeFavorite(index));
 
     const favListFiltered = useMemo(() => {
-        return favList.filter(fav => fav!==null && getItemTitle(fav.rover.name, fav.camera.name).includes(searchText));
+        return favList.filter(fav => fav !== null && getItemTitle(fav.rover.name, fav.camera.name).includes(searchText));
     }, [favList, searchText, dispatch]);
 
-    const deleteElement = useCallback( index => {
-        delFav(favList[index].id)
+    const deleteElement = useCallback(index => {
+        delFav(favList[index].id);
     }, [favList]);
 
     return (

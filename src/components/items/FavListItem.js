@@ -1,19 +1,19 @@
 import React from 'react';
 import {useCallback} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {TRASH_IMG_URI} from "../../assets/images";
+import {TRASH_IMG_URI} from '../../assets/images';
 
-const FavListItem = ({item, title, index, navigation, deleteElement }) => {
+const FavListItem = ({item, title, index, navigation, deleteElement}) => {
     const goDetails = useCallback(() => {
-            navigation.navigate("ImageDetails", {photoData: item, index: index})
-        },[navigation],
+            navigation.navigate('ImageDetails', {photoData: item, index: index});
+        }, [navigation],
     );
 
     return (
         <TouchableOpacity onPress={goDetails} style={styles.listItem}>
             <Text style={styles.itemText}>{title}</Text>
             <TouchableOpacity style={styles.deleteButton} onPress={deleteElement.bind(this, index)}>
-                <Image style={styles.buttonDeleteImg} source={{ uri: TRASH_IMG_URI}}/>
+                <Image style={styles.buttonDeleteImg} source={{uri: TRASH_IMG_URI}}/>
             </TouchableOpacity>
         </TouchableOpacity>
     );

@@ -6,14 +6,14 @@ export const DEL_USER = 'DEL_USER';
 export const addUser = data => dispatch => {
     dispatch({
         type: ADD_USER,
-        payload: data
+        payload: data,
     });
 };
 
 export const removeUser = data => dispatch => {
     dispatch({
         type: DEL_USER,
-        payload: data
+        payload: data,
     });
 };
 
@@ -21,13 +21,13 @@ export const removeUser = data => dispatch => {
 export const addFavorite = data => dispatch => {
     dispatch({
         type: ADD_FAV,
-        payload: data
+        payload: data,
     });
 };
 
 export const removeFavorite = index => dispatch => {
     dispatch({
         type: DEL_FAV,
-        payload: index
+        payload: index,
     });
 };
