@@ -9,45 +9,45 @@
 import React from 'react';
 import {StyleSheet, useColorScheme} from 'react-native';
 
-import { NavigationContainer } from '@react-navigation/native';
-import {AppTabNavigator} from "./src/components/navigators/AppTabNavigator";
-import { Provider } from "react-redux"
-import { store , persistor} from "./src/redux/store";
-import { PersistGate } from 'redux-persist/integration/react';
-import {RegisterLoginNavigator} from "./src/components/navigators/RegisterLoginNavigator";
+import {NavigationContainer} from '@react-navigation/native';
+import {AppTabNavigator} from './src/components/navigators/AppTabNavigator';
+import {Provider} from 'react-redux';
+import {store, persistor} from './src/redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
+import {RegisterLoginNavigator} from './src/components/navigators/RegisterLoginNavigator';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+    const isDarkMode = useColorScheme() === 'dark';
 
-  //                 <NavigationContainer>
-  return (
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer>
-            <RegisterLoginNavigator />
-          </NavigationContainer>
-        </PersistGate>
-      </Provider>
-  );
+    //                 <NavigationContainer>
+    return (
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <NavigationContainer>
+                    <RegisterLoginNavigator/>
+                </NavigationContainer>
+            </PersistGate>
+        </Provider>
+    );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+    sectionContainer: {
+        marginTop: 32,
+        paddingHorizontal: 24,
+    },
+    sectionTitle: {
+        fontSize: 24,
+        fontWeight: '600',
+    },
+    sectionDescription: {
+        marginTop: 8,
+        fontSize: 18,
+        fontWeight: '400',
+    },
+    highlight: {
+        fontWeight: '700',
+    },
 });
 
 export default App;

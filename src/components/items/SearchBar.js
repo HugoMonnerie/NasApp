@@ -1,8 +1,8 @@
-import {Image, StyleSheet, TextInput, View} from "react-native";
-import React from "react";
-import {SEARCH_IMG_URI} from "../../assets/images";
+import {Image, StyleSheet, TextInput, View} from 'react-native';
+import React from 'react';
+import {SEARCH_IMG_URI} from '../../assets/images';
 
-export const SearchBar = ({value, onChangeText}) =>{
+export const SearchBar = ({value, onChangeText}) => {
     return (
         <View style={styles.searchBar}>
             <Image style={styles.searchImage} source={{uri: SEARCH_IMG_URI}}/>
@@ -13,12 +13,12 @@ export const SearchBar = ({value, onChangeText}) =>{
                 style={styles.searchInput}
             />
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     searchBar: {
-        flex:1,
+        flex: 1,
         backgroundColor: '#E6E6E6',
         margin: 3,
         padding: 3,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         height: 50,
         fontSize: 20,
     },
-    searchImage:{
+    searchImage: {
         height: 30,
         width: 30,
         marginHorizontal: 5,

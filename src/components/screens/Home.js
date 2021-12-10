@@ -1,62 +1,63 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
-import apiNasa from "../../assets/js/api";
-import {dateFilterFrench} from "../../assets/js/commonFunction";
-import {ReactDetails} from "../items/ReactDetails";
-import {ScrollView} from "react-native-gesture-handler";
+import {StyleSheet, View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
+import apiNasa from '../../assets/js/api';
+import {dateFilterFrench} from '../../assets/js/commonFunction';
+import {ReactDetails} from '../items/ReactDetails';
+import {ScrollView} from 'react-native-gesture-handler';
 
-export const Home = () =>{
-    const [pictureData, setPictureData] = useState({})
-    const [isDisplayedDescription, setIsDisplayedDescription] = useState(false)
+export const Home = () => {
+    const [pictureData, setPictureData] = useState({});
+    const [isDisplayedDescription, setIsDisplayedDescription] = useState(false);
 
-    useEffect(()=>{
-        const run = async () =>{
-            const res = await apiNasa.apiNasaApod({})
-            setPictureData(res)
-        }
-        run()
-    }, [])
+    useEffect(() => {
+        const run = async () => {
+            const res = await apiNasa.apiNasaApod({});
+            setPictureData(res);
+        };
+        run();
+    }, []);
 
-    const handleDisplayDescription = useCallback(()=>{
-        setIsDisplayedDescription(!isDisplayedDescription)
-    }, [isDisplayedDescription])
+    const handleDisplayDescription = useCallback(() => {
+        setIsDisplayedDescription(!isDisplayedDescription);
+    }, [isDisplayedDescription]);
 
     return (
         <SafeAreaView>
             <ScrollView>
-                <Image style={styleHome.img} source={{uri:pictureData.hdurl}}/>
+                <Image style={styleHome.img} source={{uri: pictureData.hdurl}}/>
                 <View style={styleHome.block}>
                     <Text style={styleHome.title}>{pictureData.title}</Text>
                     <Text style={styleHome.author}>{pictureData.copyright}</Text>
                     <Text>{dateFilterFrench(pictureData.date)}</Text>
                 </View>
-                <ReactDetails onPress={handleDisplayDescription} content={pictureData.explanation} isDisplayedDescription={isDisplayedDescription}/>
+                <ReactDetails onPress={handleDisplayDescription} content={pictureData.explanation}
+                              isDisplayedDescription={isDisplayedDescription}/>
             </ScrollView>
         </SafeAreaView>
-    )
-}
+    );
+};
 
 const styleHome = StyleSheet.create({
-    main:{
-        backgroundColor:"#D7DEDEDE",
-        width:"100%",
-        flex:1,
-        borderColor:"black",
-        borderRightWidth:1,
-        borderStyle:"solid"
+    main: {
+        backgroundColor: '#D7DEDEDE',
+        width: '100%',
+        flex: 1,
+        borderColor: 'black',
+        borderRightWidth: 1,
+        borderStyle: 'solid',
     },
-    img:{
-        width:"100%",
-        height:300
+    img: {
+        width: '100%',
+        height: 300,
     },
-    block:{
-        marginTop:10
+    block: {
+        marginTop: 10,
     },
-    title:{
+    title: {
         fontStyle: 'italic',
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
     },
-    author:{
-        fontWeight:"900"
-    }
-})
+    author: {
+        fontWeight: '900',
+    },
+});

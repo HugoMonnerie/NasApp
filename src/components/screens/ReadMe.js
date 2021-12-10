@@ -1,10 +1,10 @@
-import {SafeAreaView, ScrollView} from "react-native";
-import React from "react";
+import {SafeAreaView, ScrollView} from 'react-native';
+import React from 'react';
 import Markdown from 'react-native-markdown-display';
-import {readmeContent} from "../../readme";
+import {readmeContent} from '../../readme';
 
-export const ReadMe = () =>{
-    return(
+export const ReadMe = () => {
+    return (
         <SafeAreaView>
             <ScrollView>
                 <Markdown styles={styles}>
@@ -12,8 +12,8 @@ export const ReadMe = () =>{
                 </Markdown>
             </ScrollView>
         </SafeAreaView>
-    )
-}
+    );
+};
 
 const styles = {
     heading1: {
@@ -35,4 +35,4 @@ const styles = {
     view: {
         borderWidth: 1,
     },
-}
+};

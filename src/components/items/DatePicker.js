@@ -21,7 +21,7 @@ export const DatePicker = ({value, setValue}) => {
         const currentDate = selectedDate || value;
         setShow(Platform.OS === 'ios');
         setValue(currentDate);
-        setShow(false)
+        setShow(false);
     };
 
     return (
@@ -32,17 +32,17 @@ export const DatePicker = ({value, setValue}) => {
             </TouchableOpacity>
             {show && (
                 <Modal
-                transparent={true}
-                visible={show}>
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={value}
-                    mode={mode}
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
-                    style={stylesDatePicker.datePiker}
-                />
+                    transparent={true}
+                    visible={show}>
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={value}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={onChange}
+                        style={stylesDatePicker.datePiker}
+                    />
                 </Modal>
             )}
         </View>
