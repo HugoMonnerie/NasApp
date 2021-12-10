@@ -41,7 +41,6 @@ export const styleMarsImageItem = StyleSheet.create({
     },
     fullWidth:{
         width:"100%",
-        borderWidth: 1,
     },
     fullHeight:{
         height:"100%"
