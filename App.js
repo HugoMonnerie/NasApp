@@ -7,20 +7,27 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
 import {StyleSheet, useColorScheme} from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import {AppTabNavigator} from "./src/components/navigators/AppTabNavigator";
+import { Provider } from "react-redux"
+import { store , persistor} from "./src/redux/store";
+import { PersistGate } from 'redux-persist/integration/react';
+import {RegisterLoginNavigator} from "./src/components/navigators/RegisterLoginNavigator";
 
-const App: () => Node = () => {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
+  //                 <NavigationContainer>
   return (
-      <NavigationContainer>
-        <AppTabNavigator/>
-      </NavigationContainer>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer>
+            <RegisterLoginNavigator />
+          </NavigationContainer>
+        </PersistGate>
+      </Provider>
   );
 };
 

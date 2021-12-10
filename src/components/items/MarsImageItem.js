@@ -1,9 +1,11 @@
 import React from "react";
 import {StyleSheet, Text, TouchableOpacity, View, Image} from "react-native";
 import { dateFilterFrench} from "../../assets/js/commonFunction";
+import {BG_IMG_MARS_URI} from '../../assets/images';
 
 export const MarsImageItem = ({name, earthDate, id, imgSrc, goto,  index, roverName}) => {
     return (
+
         <View style={[styleMarsImageItem.fullWidth, styleMarsImageItem.main]} index={index} >
             <TouchableOpacity style={[styleMarsImageItem.fullWidth, styleMarsImageItem.fullHeight, styleMarsImageItem.flexBetween]} onPress={goto.bind(this, index)}>
                 <View style={styleMarsImageItem.description}>
@@ -12,7 +14,7 @@ export const MarsImageItem = ({name, earthDate, id, imgSrc, goto,  index, roverN
                     <Text>date : {dateFilterFrench(earthDate)}</Text>
                     <Text>rover : {roverName}</Text>
                 </View>
-                <Image style={styleMarsImageItem.img} source={{uri: imgSrc}}/>
+                <Image style={styleMarsImageItem.img} source={{uri:imgSrc.replace('http://', 'https://')}}/>
             </TouchableOpacity>
         </View>
     )
@@ -20,6 +22,7 @@ export const MarsImageItem = ({name, earthDate, id, imgSrc, goto,  index, roverN
 
 export const styleMarsImageItem = StyleSheet.create({
     main:{
+        width: 400,
         height:100,
         backgroundColor:"#E9EEEEEE"
     },
@@ -29,6 +32,7 @@ export const styleMarsImageItem = StyleSheet.create({
     },
     img:{
         minWidth:100,
+        width: 300,
         height:"100%",
         flex:1
     },

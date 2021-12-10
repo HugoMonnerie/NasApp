@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Text, TextInput, View, StyleSheet, Button, Pressable } from 'react-native'
+import { Text, TextInput, View, StyleSheet, Button, Pressable, Alert } from 'react-native'
 
 import auth from '@react-native-firebase/auth';
 
-export default function LogIn() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RegisterLoginNavigator } from '../navigators/RegisterLoginNavigator';
+import { AppTabNavigator } from '../navigators/AppTabNavigator';
 
-    const [email, setEmail] = useState([
+const Stack = createNativeStackNavigator();
 
-    ])
-    const [password, setPassword] = useState([
+export default function LogIn({navigation}) {
 
-    ])
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const onChangePassword = (val) =>{
         setPassword(val)
@@ -24,7 +27,7 @@ export default function LogIn() {
     const LogOut = () => {
         auth()
         .signOut()
-        .then(() => console.log('User signed out!'));
+        .then(() => navigation.navigate('Register'));
     }
 
     // Fonction de connexion fournie par firebase qui va vérifier si l'user existe 
@@ -34,13 +37,20 @@ export default function LogIn() {
         // si l'user existe et que les logins sont justes, le connecte
         .then(() => {
             console.log('User signed in !');
+            navigation.navigate('AppTabNavigator')
         })
         .catch(error => {
-            if (error.code === 'auth/invalid-email') {
-            console.log('That email address is invalid!');
+            switch(error.code){
+                case 'auth/invalid-email':
+                    Alert.alert('Invalid email !')
+                    break;
+                case 'auth/user-not-found':
+                    Alert.alert('User not found !')
+                    break;
             }
+            
 
-            console.error(error);
+            
         });
     }
 
@@ -77,7 +87,10 @@ export default function LogIn() {
                 placeholder='Mot de passe'
                 secureTextEntry={true} 
             />
-            <Pressable>
+            <Pressable
+                onPress={() =>
+                    navigation.navigate('Register')}
+            >
                 <Text style={styles.pressable}>Pas encore de compte ?</Text>
             </Pressable>
             <Button

@@ -1,39 +1,41 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, View, SafeAreaView, Text, Image, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, SafeAreaView, Text, Image} from 'react-native';
 import {dateFilterFrench} from "../../assets/js/commonFunction";
+import {useDispatch, useSelector } from "react-redux";
+import {addFavorite, removeFavorite} from "../../redux/actions";
+import {FavoriteButton} from "./FavoriteButton";
+import {GoBackButton} from "./GoBackButton";
 
-/**
-    * {
- *      "id":102693,
- *      "sol":1000,
- *      "camera":{
- *          "id":20,
- *          "name":"FHAZ",
- *          "rover_id":5,
- *          "full_name":"Front Hazard Avoidance Camera"
- *      },
- *      "img_src":"http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/01000/opgs/edr/fcam/FLB_486265257EDR_F0481570FHAZ00323M_.JPG",
- *      "earth_date":"2015-05-30",
- *      "rover":{
- *          "id":5,
- *          "name":"Curiosity",
- *          "landing_date":"2012-08-06",
- *          "launch_date":"2011-11-26",
- *          "status":"active"
- *          }
- *       }
- */
 export const MarsImageDetails = ({route, navigation}) =>{
     const {index, photoData} = route.params
+    const dispatch = useDispatch()
+    const favList =useSelector(state=>state.favReducer.favList)
+
+    const isInFavList = useCallback(()=>{
+        return favList.some(el=> el!== null && photoData.id === el.id)
+    },[dispatch, favList])
 
     const goBack = useCallback(()=>{
         navigation.goBack()
     },[navigation])
 
+    //region redux
+    const addFav = photoData => dispatch(addFavorite(photoData));
+    const delFav = index => dispatch(removeFavorite(index));
+
+    const addToFavorite = useCallback(()=>{
+        addFav(photoData)
+    },[])
+
+    const removeFromFavorite = useCallback(()=>{
+        delFav(photoData.id)
+    },[])
+    //endregion
+
     return (
         <SafeAreaView style={styleMarsImageDetails.main}>
-            <ScrollView style={[styleMarsImageDetails.fullHeight]}>
-                <Image style={styleMarsImageDetails.img} source={{uri: photoData.img_src}}/>
+            <View>
+                <Image style={styleMarsImageDetails.img} source={{uri: photoData.img_src.replace('http://', 'https://')}}/>
                 <View>
                     <View style={styleMarsImageDetails.block}>
                         <Text>Photo date : {dateFilterFrench(photoData.earth_date)}</Text>
@@ -48,18 +50,21 @@ export const MarsImageDetails = ({route, navigation}) =>{
                         <Text>Landing date : {dateFilterFrench(photoData.rover.landing_date)}</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={goBack}>
-                    <Text>return</Text>
-                </TouchableOpacity>
-            </ScrollView>
+            </View>
+            <View style={styleMarsImageDetails.buttonContainer}>
+                <GoBackButton goBack={goBack}/>
+                <FavoriteButton addToFavorite={addToFavorite}
+                            isInFavList={isInFavList}
+                            removeFromFavorite={removeFromFavorite}/>
+            </View>
         </SafeAreaView>
     )
 }
 
-
 export const styleMarsImageDetails = StyleSheet.create({
     main:{
-        height:"100%"
+        height:"100%",
+        justifyContent:"space-between"
     },
     block:{
         marginTop:10
@@ -71,5 +76,9 @@ export const styleMarsImageDetails = StyleSheet.create({
     },
     fullHeight:{
         height:"100%"
+    },
+    buttonContainer:{
+        flexDirection:"row",
+        justifyContent: "space-between"
     }
 })

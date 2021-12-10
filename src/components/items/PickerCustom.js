@@ -5,7 +5,7 @@ import {Picker} from '@react-native-picker/picker';
 export const PickerCustom = ({dataList, value, onSelect}) => {
     return (
         <View style={stylesPickerCustom.main}>
-            <Picker selectedValue={value} onValueChange={onSelect} >
+            <Picker style={stylesPickerCustom.selecter} selectedValue={value} onValueChange={onSelect} >
                 {
                     dataList.map((item, itemIndex) => {
                         return (<Picker.Item label={item.label} value={item.value} id={itemIndex} key={itemIndex}/>)
@@ -28,6 +28,10 @@ const stylesPickerCustom = StyleSheet.create({
         flex:1,
         borderColor:"black",
         borderRightWidth:1,
-        borderStyle:"solid"
+        borderStyle:"solid",
+        justifyContent: 'center',
+    },
+    selecter: {
+
     }
 })
