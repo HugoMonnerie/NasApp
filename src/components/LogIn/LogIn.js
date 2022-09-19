@@ -33,14 +33,6 @@ export default function LogIn({navigation}) {
         addUserLogin(email);
     }, [email]);
 
-
-    // Déconnexion
-    const LogOut = () => {
-        auth()
-            .signOut()
-            .then(() => navigation.navigate('Register'));
-    };
-
     // Fonction de connexion fournie par firebase qui va vérifier si l'user existe
     const LogIn = () => {
         if (email === '' || password === '') {
