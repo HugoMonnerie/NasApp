@@ -13,7 +13,7 @@ import {addUser} from '../../redux/actions';
 const Stack = createNativeStackNavigator();
 
 export default function LogIn({navigation}) {
-    const userMail = useSelector(state => Object.keys(state.userReducer.users)[0]);
+    const userMail = useSelector(state => !state.userReducer.users[0] ? null : state.userReducer.users[0].mail);
     const [email, setEmail] = useState(userMail || '');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();

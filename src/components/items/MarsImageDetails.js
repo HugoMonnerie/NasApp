@@ -10,8 +10,6 @@ export const MarsImageDetails = ({route, navigation}) => {
     const {index, photoData} = route.params;
     const dispatch = useDispatch();
     const favList = useSelector(state => state.favReducer.favList);
-    const user = useSelector(state => state.userReducer.users);
-    console.log(user);
 
     const isInFavList = useCallback(() => {
         return favList.some(el => el !== null && photoData.id === el.id);

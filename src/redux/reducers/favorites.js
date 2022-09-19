@@ -2,7 +2,7 @@ import {ADD_FAV, DEL_FAV, ADD_USER, DEL_USER} from '../actions';
 import {isNullOrUndefined} from '../../assets/js/commonFunction';
 
 const initialState = {
-    users: {},
+    users: [],
     favList: [],
 };
 
@@ -10,9 +10,11 @@ const addOneUser = (state, action) => {
     if (isNullOrUndefined(action.payload)) {
         return {...state};
     }
-    const userIndex = Object.keys(state.users).findIndex(item => item === action.payload);
+    const userIndex = state.users.findIndex(item => item.mail === action.payload);
     if (userIndex === -1) {
-        return {...state, users: {...state.users, [action.payload]: {}}};
+        const newStateUser = [...state.users]
+        newStateUser.unshift({mail:action.payload});
+        return {...state, users:  newStateUser};
     }
     return {...state};
 };
@@ -21,11 +23,11 @@ const removeOneUser = (state, action) => {
     if (isNullOrUndefined(action.payload)) {
         return {...state};
     }
-    const userIndex = Object.keys(state.users).findIndex(item => item === action.payload);
+    const userIndex = state.users.findIndex(item => item.mail === action.payload);
     if (userIndex !== -1) {
         return {
             ...state,
-            users: {},
+            users: state.users.filter((item, index) => index !== userIndex),
         };
     }
     return {...state};
